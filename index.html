@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>林楚皓的生日祝福</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+  html, body { width: 100%; height: 100%; overflow: hidden; background: #1a1a2e;
+    font-family: "PingFang SC", "Microsoft YaHei", "Heiti SC", sans-serif; }
+
+  .popup {
+    position: fixed; width: 150px; min-height: 74px; z-index: 9998;
+    display: flex; align-items: center; justify-content: center; text-align: center;
+    border-radius: 10px; color: #333; font-weight: bold; font-size: 15px;
+    line-height: 1.35; padding: 8px; word-break: break-all;
+    box-shadow: 0 6px 18px rgba(0,0,0,.35);
+    border: 2px solid rgba(255,255,255,.6);
+  }
+
+  #mask {
+    position: fixed; inset: 0; z-index: 99999;
+    background: rgba(0,0,0,.45);
+    display: flex; align-items: center; justify-content: center; padding: 20px;
+  }
+  #card {
+    width: 100%; max-width: 340px; background: #f5f5f5; border-radius: 14px;
+    padding: 26px 18px 20px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,.4);
+  }
+  #title { font-size: 20px; color: #333; margin-bottom: 22px; }
+  .btn {
+    display: inline-block; border: none; color: #fff; font-size: 16px; font-weight: bold;
+    padding: 12px 26px; border-radius: 8px; margin: 0 6px; cursor: pointer;
+  }
+  #no { background: #ff6b6b; }
+  #yes { background: #4cd964; }
+
+  #toast {
+    position: fixed; left: 50%; top: 30%; transform: translateX(-50%);
+    background: rgba(0,0,0,.85); color: #fff; padding: 14px 22px; border-radius: 10px;
+    font-size: 16px; z-index: 100000; display: none;
+  }
+</style>
+</head>
+<body>
+
+<div id="toast"></div>
+
+<div id="mask">
+  <div id="card">
+    <div id="title">林楚皓生日快乐！</div>
+    <button class="btn" id="no">不快乐</button>
+    <button class="btn" id="yes">快乐</button>
+  </div>
+</div>
+
+<script>
+  var textList = [
+    "林楚皓生日快乐！",
+    "林楚皓今天开心最重要",
+    "林楚皓所有烦恼都消散",
+    "林楚皓好运加满",
+    "林楚皓心想事成",
+    "林楚皓平安喜乐",
+    "林楚皓万事胜意",
+    "林楚皓福气满满",
+    "林楚皓好运连连",
+    "林楚皓快乐每一天",
+    "林楚皓幸福常伴",
+    "林楚皓甜甜蜜蜜",
+    "林楚皓顺顺利利",
+    "天官赐福，百无禁忌",
+    "道炁长存，福寿绵延"
+  ];
+
+  var colorList = [
+    "#FFB6C1", "#FFD700", "#98FB98", "#87CEEB",
+    "#DDA0DD", "#FFA07A", "#B0E0E6", "#F0E68C",
+    "#FFC0CB", "#90EE90", "#FFE4E1", "#E6E6FA"
+  ];
+
+  function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+
+  function showToast(msg) {
+    var t = document.getElementById("toast");
+    t.textContent = msg;
+    t.style.display = "block";
+    clearTimeout(window.__tt);
+    window.__tt = setTimeout(function () { t.style.display = "none"; }, 1600);
+  }
+
+  function createPopup() {
+    var p = document.createElement("div");
+    p.className = "popup";
+    p.textContent = pick(textList);
+    p.style.background = pick(colorList);
+    var w = window.innerWidth, h = window.innerHeight;
+    p.style.left = Math.floor(Math.random() * Math.max(10, w - 160)) + "px";
+    p.style.top = Math.floor(Math.random() * Math.max(10, h - 100)) + "px";
+    document.body.appendChild(p);
+  }
+
+  function startPopups() {
+    var total = 60;
+    for (var i = 0; i < total; i++) {
+      (function (step) {
+        setTimeout(function () {
+          createPopup();
+          if (step === 0) {
+            showToast("不准关掉！请选择快乐😊");
+          }
+        }, step * 110 + Math.random() * 80);
+      })(i);
+    }
+  }
+
+  document.getElementById("no").addEventListener("click", function () {
+    showToast("不准选这个！😜");
+  });
+
+  document.getElementById("yes").addEventListener("click", function () {
+    document.getElementById("mask").style.display = "none";
+    startPopups();
+  });
+
+  document.addEventListener("contextmenu", function (e) { e.preventDefault(); });
+</script>
+</body>
+</html>
